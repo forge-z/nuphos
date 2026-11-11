@@ -160,7 +160,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 30
-      start_period: 20s
+      start_period: 120s
     restart: unless-stopped
 
 networks:
