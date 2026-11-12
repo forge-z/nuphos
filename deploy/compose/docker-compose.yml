@@ -26,7 +26,7 @@ services:
           echo 'try { rs.status().ok } catch (e) { rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] }) }' | mongosh --port 27017 --quiet
       interval: 5s
       timeout: 10s
-      retries: 30
+      retries: 20
       start_period: 60s
     restart: unless-stopped
 
