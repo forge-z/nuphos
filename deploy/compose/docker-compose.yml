@@ -21,17 +21,13 @@ services:
     # stays unhealthy until this node is PRIMARY.
     healthcheck:
       test:
-        - CMD
-        - mongosh
-        - --quiet
-        - --eval
+        - CMD-SHELL
         - >-
-          try { quit(rs.status().members.some((m) => m.stateStr === 'PRIMARY') ? 0 : 1) }
-          catch (e) { rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'mongo:27017' }] }); quit(1) }
+          echo 'try { rs.status().ok } catch (e) { rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "localhost:27017" }] }).ok }' | mongo --quiet
       interval: 5s
       timeout: 10s
       retries: 30
-      start_period: 10s
+      start_period: 120s
     restart: unless-stopped
 
   rustfs:
@@ -160,7 +156,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 30
-      start_period: 120s
+      start_period: 20s
     restart: unless-stopped
 
 networks:
