@@ -22,13 +22,11 @@ services:
     # stays unhealthy until this node is PRIMARY.
     healthcheck:
       test:
-        - CMD-SHELL
-        - >-
-          mongosh --quiet --eval '
-          try { rs.status().ok }
-          catch (e) {
-            rs.initiate({ _id: "rs0", members: [{ _id: 0, host: "mongo:27017" }] }).ok
-          }'
+        - CMD
+        - mongosh
+        - --quiet
+        - --eval
+        - "db.adminCommand('ping').ok"
       interval: 20s
       timeout: 30s
       retries: 15
